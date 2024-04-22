@@ -14,20 +14,18 @@ const app = express();
 //configurar CORS
 app.use(cors());
 
+//Lectura del body
+app.use( express.json() )
+
 // Base de datos
 dbConnection();
 
-console.log( process.env );
+//console.log( process.env );
 
-//rutas
-
-app.get( '/', (req,res) =>{
-    res.status(400).json({
-        ok: true,
-        msg: 'hola'
-})
-} );
+//Rutas
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/login', require('./routes/auth'));
 
 app.listen( process.env.PORT, () => {
-    console.log('Servidor corriendo en puerto: ' + 3000)
+    console.log('Servidor corriendo en puerto: ' + process.env.PORT)
 })
